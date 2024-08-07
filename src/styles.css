@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(28, 82, 28);
+  margin: 3% 10%;
+}
+
+@media (max-width: 992px) {
+  body {
+    margin: 2% 8%;
+  }
+}
+@media (max-width: 767px) {
+  body {
+    margin: 1% 6%;
+  }
+}
+@media (max-width: 479px) {
+  body {
+    margin: 1% 3%;
+  }
+}

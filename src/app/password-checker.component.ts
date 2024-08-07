@@ -4,7 +4,6 @@ import {
   FormGroup,
   Validators,
   AbstractControl,
-  ValidationErrors,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,13 +17,16 @@ import { CommonModule } from '@angular/common';
 })
 export class PasswordCheckerComponent {
   passwordForm: FormGroup;
+  passwordStrength: string = '';
+  passwordFieldType: string = 'password';
 
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group({
-      password: [
-        '',
-        [Validators.required, Validators.minLength(8), this.passwordValidator],
-      ],
+      password: ['', [Validators.required]],
+    });
+
+    this.passwordForm.get('password')?.valueChanges.subscribe((value) => {
+      this.passwordStrength = this.calculatePasswordStrength(value);
     });
   }
 
@@ -32,29 +34,54 @@ export class PasswordCheckerComponent {
     return this.passwordForm.get('password')!;
   }
 
-  onSubmit(): void {
-    if (this.passwordForm.valid) {
-      alert('Пароль відповідає вимогам!');
+  calculatePasswordStrength(password: string): string {
+    if (!password) {
+      return 'empty';
     }
+    if (password.length < 8) {
+      return 'too-short';
+    }
+    const hasLetters = /[a-zA-Z]/.test(password);
+    const hasDigits = /\d/.test(password);
+    const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (hasLetters && hasDigits && hasSymbols) {
+      return 'strong';
+    }
+    if (
+      (hasLetters && hasDigits) ||
+      (hasLetters && hasSymbols) ||
+      (hasDigits && hasSymbols)
+    ) {
+      return 'medium';
+    }
+    return 'easy';
   }
 
-  passwordValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    const errors: any = {};
+  getStrengthClass(section: number): string {
+    if (this.passwordStrength === 'empty') {
+      return 'gray';
+    }
+    if (this.passwordStrength === 'too-short') {
+      return 'red';
+    }
+    if (this.passwordStrength === 'easy' && section === 1) {
+      return 'red';
+    }
+    if (
+      this.passwordStrength === 'medium' &&
+      (section === 1 || section === 2)
+    ) {
+      return 'yellow';
+    }
+    if (this.passwordStrength === 'strong') {
+      return 'green';
+    }
+    return 'gray';
+  }
 
-    if (!/[A-Z]/.test(value)) {
-      errors.uppercase = true;
-    }
-    if (!/[a-z]/.test(value)) {
-      errors.lowercase = true;
-    }
-    if (!/[0-9]/.test(value)) {
-      errors.number = true;
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-      errors.specialCharacter = true;
-    }
-
-    return Object.keys(errors).length ? errors : null;
+  togglePasswordVisibility(): void {
+    this.passwordFieldType =
+      this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 }
