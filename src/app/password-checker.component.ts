@@ -27,7 +27,6 @@ export class PasswordCheckerComponent {
     });
 
     this.passwordForm.get('password')?.valueChanges.subscribe((value) => {
-      // Ensure value is a string before checking its length
       this.passwordLength = typeof value === 'string' ? value.length : 0;
       this.passwordStrength = this.calculatePasswordStrength(value);
     });
