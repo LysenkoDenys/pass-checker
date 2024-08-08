@@ -6,7 +6,7 @@
 
 https://pass-checker-angular.vercel.app/
 
-<p>Test task is here:https://docs.google.com/document/d/1BAG6Q7X6PpTMSgbNNBmvBqcQCAJGrAdqWccim61pg7w/edit</p>
+<p>Test task is here: https://docs.google.com/document/d/1BAG6Q7X6PpTMSgbNNBmvBqcQCAJGrAdqWccim61pg7w/edit</p>
 
 <p>This app allows you:</p>
 <ul>
