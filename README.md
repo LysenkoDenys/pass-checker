@@ -6,10 +6,8 @@
 
 https://pass-checker-angular.vercel.app/
 
-<p>Test task is here:</p>
-https://docs.google.com/document/d/1BAG6Q7X6PpTMSgbNNBmvBqcQCAJGrAdqWccim61pg7w/edit
+<p>Test task is here:https://docs.google.com/document/d/1BAG6Q7X6PpTMSgbNNBmvBqcQCAJGrAdqWccim61pg7w/edit</p>
 
-<br>
 <p>This app allows you:</p>
 <ul>
 <li>⭐ensure that your password is strength enough</li>
