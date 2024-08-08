@@ -19,6 +19,7 @@ export class PasswordCheckerComponent {
   passwordForm: FormGroup;
   passwordStrength: string = '';
   passwordFieldType: string = 'password';
+  passwordLength: number = 0;
 
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group({
@@ -26,6 +27,8 @@ export class PasswordCheckerComponent {
     });
 
     this.passwordForm.get('password')?.valueChanges.subscribe((value) => {
+      // Ensure value is a string before checking its length
+      this.passwordLength = typeof value === 'string' ? value.length : 0;
       this.passwordStrength = this.calculatePasswordStrength(value);
     });
   }
@@ -83,5 +86,12 @@ export class PasswordCheckerComponent {
   togglePasswordVisibility(): void {
     this.passwordFieldType =
       this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  resetPassword(): void {
+    this.passwordForm.reset();
+    this.passwordStrength = 'empty';
+    this.passwordLength = 0;
+    this.passwordFieldType = 'password';
   }
 }
