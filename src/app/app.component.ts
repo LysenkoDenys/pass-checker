@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PasswordCheckerComponent } from './password-checker.component';
+import { PasswordCheckerComponent } from '../app/password-checker/password-checker.component';
 
 @Component({
   selector: 'app-root',
