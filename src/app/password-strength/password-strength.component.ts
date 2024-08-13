@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { PasswordCheckerService } from '../password-checker.service';
-import { CommonModule } from '@angular/common';
+import { CustomCommonModule } from '../custom-common.module';
 
 @Component({
   selector: 'app-password-strength',
   templateUrl: './password-strength.component.html',
   styleUrls: ['./password-strength.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CustomCommonModule],
 })
 export class PasswordStrengthComponent {
   @Input() passwordStrength: string = '';

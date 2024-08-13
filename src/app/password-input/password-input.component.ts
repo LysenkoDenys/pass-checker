@@ -1,6 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CustomCommonModule } from '../custom-common.module';
 
 @Component({
   selector: 'app-password-input',
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
       multi: true,
     },
   ],
-  imports: [CommonModule],
+  imports: [CustomCommonModule],
 })
 export class PasswordInputComponent implements ControlValueAccessor {
   passwordFieldType: string = 'password';

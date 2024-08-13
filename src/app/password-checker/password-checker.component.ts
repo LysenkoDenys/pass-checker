@@ -6,7 +6,7 @@ import { PasswordCheckerService } from '../password-checker.service';
 import { PasswordInputComponent } from '../password-input/password-input.component';
 import { PasswordStrengthComponent } from '../password-strength/password-strength.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CustomCommonModule } from '../custom-common.module';
 
 @Component({
   selector: 'app-password-checker',
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
     PasswordInputComponent,
     PasswordStrengthComponent,
     ReactiveFormsModule,
-    CommonModule,
+    CustomCommonModule,
   ],
 })
 export class PasswordCheckerComponent implements OnDestroy {
