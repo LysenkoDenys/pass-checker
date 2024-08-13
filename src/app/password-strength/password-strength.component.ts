@@ -1,15 +1,18 @@
 import { Component, Input } from '@angular/core';
+import { PasswordCheckerService } from '../password-checker.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-password-strength',
-  standalone: true,
   templateUrl: './password-strength.component.html',
   styleUrls: ['./password-strength.component.css'],
+  standalone: true,
   imports: [CommonModule],
 })
 export class PasswordStrengthComponent {
   @Input() passwordStrength: string = '';
+
+  constructor(private passwordCheckerService: PasswordCheckerService) {}
 
   getStrengthClass(section: number): string {
     if (this.passwordStrength === 'empty') {

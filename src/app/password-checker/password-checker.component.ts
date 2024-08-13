@@ -1,34 +1,34 @@
 import { Component, OnDestroy } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import { PasswordCheckerService } from '../password-checker.service';
 import { PasswordInputComponent } from '../password-input/password-input.component';
 import { PasswordStrengthComponent } from '../password-strength/password-strength.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-password-checker',
-  standalone: true,
   templateUrl: './password-checker.component.html',
   styleUrls: ['./password-checker.component.css'],
+  standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
     PasswordInputComponent,
     PasswordStrengthComponent,
+    ReactiveFormsModule,
+    CommonModule,
   ],
 })
 export class PasswordCheckerComponent implements OnDestroy {
   passwordForm: FormGroup;
-  passwordStrength: string = 'empty';
+  passwordStrength: string = '';
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private passwordCheckerService: PasswordCheckerService
+  ) {
     this.passwordForm = this.fb.group({
       password: ['', [Validators.required]],
     });
@@ -37,32 +37,9 @@ export class PasswordCheckerComponent implements OnDestroy {
       .get('password')
       ?.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe((value) => {
-        this.passwordStrength = this.calculatePasswordStrength(value);
+        this.passwordStrength =
+          this.passwordCheckerService.calculatePasswordStrength(value);
       });
-  }
-
-  calculatePasswordStrength(password: string): string {
-    if (!password) {
-      return 'empty';
-    }
-    if (password.length < 8) {
-      return 'too-short';
-    }
-    const hasLetters = /[a-zA-Z]/.test(password);
-    const hasDigits = /\d/.test(password);
-    const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-    if (hasLetters && hasDigits && hasSymbols) {
-      return 'strong';
-    }
-    if (
-      (hasLetters && hasDigits) ||
-      (hasLetters && hasSymbols) ||
-      (hasDigits && hasSymbols)
-    ) {
-      return 'medium';
-    }
-    return 'easy';
   }
 
   ngOnDestroy(): void {
